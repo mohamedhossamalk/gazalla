@@ -86,7 +86,7 @@ export default function Home() {
           <div className="container mx-auto px-4">
             <div className="flex flex-col lg:flex-row items-center justify-between">
               <div className="lg:w-1/2 text-center lg:text-left z-10 mb-10 lg:mb-0">
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 slide-up animate-delay-100">GAZALLA Accessories</h1>
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 slide-up animate-delay-100">GAZALLA BRAND</h1>
                 <p className="text-xl mb-8 max-w-lg mx-auto lg:mx-0 slide-up animate-delay-300">
                   Discover our premium collection of accessories for men and women
                 </p>
