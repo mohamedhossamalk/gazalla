@@ -38,7 +38,7 @@ export default function CartPage() {
               </svg>
             </div>
             <h2 className="text-2xl font-bold text-foreground mb-4">Your cart is empty</h2>
-            <p className="text-gray-400 mb-6 text-lg">Looks like you haven't added anything to your cart yet</p>
+            <p className="text-gray-400 mb-6 text-lg">Looks like you haven&apos;t added anything to your cart yet</p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <button 
                 onClick={() => router.push('/products')}
@@ -61,7 +61,7 @@ export default function CartPage() {
                 <div className="p-4 bg-gray-800 border-b border-card-border">
                   <h2 className="font-bold text-foreground">Items in your cart ({cart.reduce((total, item) => total + item.quantity, 0)})</h2>
                 </div>
-                {cart.map((item, index) => {
+                {cart.map((item) => {
                   // Skip items without IDs
                   if (!item.id) {
                     console.warn('Cart item missing ID:', item);
@@ -69,7 +69,7 @@ export default function CartPage() {
                   }
                   
                   return (
-                    <div key={item.id} className="flex items-center p-6 border-b border-card-border last:border-b-0 slide-up animate-delay-{index * 50}">
+                    <div key={item.id} className="flex items-center p-6 border-b border-card-border last:border-b-0 slide-up">
                       <div className="bg-gray-700 w-24 h-24 flex items-center justify-center mr-6 rounded-lg">
                         <img 
                           src="/image/WhatsApp_Image_2025-09-17_at_02.47.45_de6dbebb-removebg-preview.png" 

@@ -148,8 +148,8 @@ export default function Home() {
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {featuredProducts.map((product, index) => (
-                  <div key={product.id} className="slide-up animate-delay-{index * 100}">
+                {featuredProducts.map((product) => (
+                  <div key={product.id} className="slide-up">
                     <ProductCard product={product} />
                   </div>
                 ))}
