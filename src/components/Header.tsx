@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useCart } from '@/context/CartContext';
 import { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 
 // Define the user type
 interface User {
@@ -18,6 +19,8 @@ export default function Header() {
   const [mounted, setMounted] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState<User | null>(null);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
   
   useEffect(() => {
     setMounted(true);
@@ -30,6 +33,11 @@ export default function Header() {
     }
   }, []);
   
+  // Close mobile menu when pathname changes
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [pathname]);
+  
   // Calculate total items in cart
   const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
 
@@ -40,6 +48,7 @@ export default function Header() {
           <Link href="/" className="text-2xl font-bold text-foreground">
             GAZALLA
           </Link>
+          {/* Desktop Navigation */}
           <nav className="hidden md:flex space-x-8">
             <Link href="/products?category=men" className="text-foreground hover:text-gray-300">
               Men
@@ -88,9 +97,49 @@ export default function Header() {
               </svg>
             </Link>
           )}
-
+          {/* Mobile menu button */}
+          <button 
+            className="md:hidden text-foreground focus:outline-none" 
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              {isMenuOpen ? (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              )}
+            </svg>
+          </button>
         </div>
       </div>
+      {/* Mobile Navigation */}
+      {isMenuOpen && (
+        <div className="md:hidden bg-header-background border-t border-gray-700">
+          <nav className="container mx-auto px-4 py-4 flex flex-col space-y-4">
+            <Link href="/products?category=men" className="text-foreground hover:text-gray-300 py-2">
+              Men
+            </Link>
+            <Link href="/products?category=women" className="text-foreground hover:text-gray-300 py-2">
+              Women
+            </Link>
+            <Link href="/products" className="text-foreground hover:text-gray-300 py-2">
+              All Products
+            </Link>
+            {/* Show Admin link only to admin users */}
+            {user && user.role === 'admin' && (
+              <Link href="/admin" className="text-foreground hover:text-gray-300 py-2">
+                Admin
+              </Link>
+            )}
+            {/* Database Status Link - Only show in development */}
+            {process.env.NODE_ENV === 'development' && (
+              <Link href="/database-status" className="text-foreground hover:text-gray-300 py-2">
+                DB Status
+              </Link>
+            )}
+          </nav>
+        </div>
+      )}
     </header>
   );
 }
