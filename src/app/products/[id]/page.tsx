@@ -8,6 +8,7 @@ import { useCart } from '@/context/CartContext';
 import { useWishlist } from '@/context/WishlistContext';
 import { Product } from '@/types/product';
 import React from 'react';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 export default function ProductDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter();
@@ -51,6 +52,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
         <Header />
         <main className="container mx-auto px-4 py-8">
           <div className="text-center py-12">
+            <LoadingSpinner size="lg" className="mx-auto mb-4" />
             <p className="text-gray-400">Loading product...</p>
           </div>
         </main>
@@ -63,11 +65,11 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
       <div className="min-h-screen bg-background">
         <Header />
         <main className="container mx-auto px-4 py-8">
-          <div className="text-center py-12">
+          <div className="text-center py-12 fade-in">
             <h1 className="text-2xl font-bold text-foreground mb-4">{error || 'Product Not Found'}</h1>
             <button 
               onClick={() => router.push('/products')}
-              className="bg-button-background text-white px-6 py-3 rounded hover:bg-button-hover transition-colors duration-200"
+              className="bg-button-background text-white px-6 py-3 rounded hover:bg-button-hover transition-all duration-300 transform hover:scale-105 glow-hover"
             >
               Back to Products
             </button>
@@ -99,16 +101,16 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
     <div className="min-h-screen bg-background">
       <Header />
       <main className="container mx-auto px-4 py-8">
-        <div className="flex flex-col md:flex-row gap-8">
+        <div className="flex flex-col md:flex-row gap-8 fade-in">
           {/* Product Image */}
-          <div className="md:w-1/2">
-            <div className="bg-gray-700 h-96 md:h-[500px] flex items-center justify-center rounded-lg">
+          <div className="md:w-1/2 float-hover">
+            <div className="bg-gray-700 h-96 md:h-[500px] flex items-center justify-center rounded-lg shadow-lg">
               <span className="text-gray-300">Product Image</span>
             </div>
           </div>
           
           {/* Product Info */}
-          <div className="md:w-1/2">
+          <div className="md:w-1/2 slide-up">
             <h1 className="text-3xl font-bold text-foreground mb-4">{product.name}</h1>
             <p className="text-2xl font-semibold text-foreground mb-6">${product.price.toFixed(2)}</p>
             <p className="text-gray-400 mb-8">{product.description}</p>
@@ -118,14 +120,14 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
               <div className="flex items-center">
                 <button 
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  className="bg-gray-700 text-foreground px-4 py-2 rounded-l hover:bg-gray-600"
+                  className="bg-gray-700 text-foreground px-4 py-2 rounded-l hover:bg-gray-600 transition-all duration-200 transform hover:scale-105"
                 >
                   -
                 </button>
                 <span className="bg-gray-800 px-4 py-2 text-foreground">{quantity}</span>
                 <button 
                   onClick={() => setQuantity(quantity + 1)}
-                  className="bg-gray-700 text-foreground px-4 py-2 rounded-r hover:bg-gray-600"
+                  className="bg-gray-700 text-foreground px-4 py-2 rounded-r hover:bg-gray-600 transition-all duration-200 transform hover:scale-105"
                 >
                   +
                 </button>
@@ -135,21 +137,21 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
             <div className="flex gap-4">
               <button
                 onClick={handleAddToCart}
-                className="bg-button-background text-white px-6 py-3 rounded hover:bg-button-hover transition-colors duration-200 flex-1"
+                className="bg-button-background text-white px-6 py-3 rounded hover:bg-button-hover transition-all duration-300 transform hover:scale-105 glow-hover flex-1"
               >
                 Add to Cart
               </button>
               <button
                 onClick={handleToggleWishlist}
-                className={`px-6 py-3 rounded border transition-colors duration-200 flex items-center ${
+                className={`px-6 py-3 rounded border transition-all duration-300 transform hover:scale-105 flex items-center ${
                   isInWishlist(product.id)
-                    ? 'bg-red-900 border-red-700 text-red-200'
+                    ? 'bg-red-900 border-red-700 text-red-200 hover:bg-red-800'
                     : 'bg-card-background border-card-border text-foreground hover:bg-gray-700'
                 }`}
               >
                 {isInWishlist(product.id) ? (
                   <>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 animate-pulse" viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
                     </svg>
                     In Wishlist

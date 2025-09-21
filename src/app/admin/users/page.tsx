@@ -193,7 +193,7 @@ export default function AdminUsersPage() {
             <h2 className="text-2xl font-bold mb-6 text-foreground">Add New User</h2>
             <form onSubmit={handleAddUser}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                <div>
+                <div key="firstName">
                   <label className="block text-foreground mb-2">First Name</label>
                   <input
                     type="text"
@@ -204,7 +204,7 @@ export default function AdminUsersPage() {
                     required
                   />
                 </div>
-                <div>
+                <div key="lastName">
                   <label className="block text-foreground mb-2">Last Name</label>
                   <input
                     type="text"
@@ -216,7 +216,7 @@ export default function AdminUsersPage() {
                   />
                 </div>
               </div>
-              <div className="mb-4">
+              <div className="mb-4" key="email">
                 <label className="block text-foreground mb-2">Email</label>
                 <input
                   type="email"
@@ -227,7 +227,7 @@ export default function AdminUsersPage() {
                   required
                 />
               </div>
-              <div className="mb-4">
+              <div className="mb-4" key="password">
                 <label className="block text-foreground mb-2">Password</label>
                 <input
                   type="password"
@@ -238,7 +238,7 @@ export default function AdminUsersPage() {
                   required
                 />
               </div>
-              <div className="mb-6">
+              <div className="mb-6" key="role">
                 <label className="block text-foreground mb-2">Role</label>
                 <select
                   name="role"
@@ -283,7 +283,7 @@ export default function AdminUsersPage() {
             </div>
 
             {loading ? (
-              <div className="text-center py-4">
+              <div className="text-center py-4" key="loading">
                 <p className="text-gray-400">Loading users...</p>
               </div>
             ) : (
@@ -329,7 +329,7 @@ export default function AdminUsersPage() {
                 </table>
 
                 {filteredUsers.length === 0 && (
-                  <div className="text-center py-4">
+                  <div className="text-center py-4" key="no-users">
                     <p className="text-gray-400">
                       {searchTerm ? 'No users match your search.' : 'No users found.'}
                     </p>

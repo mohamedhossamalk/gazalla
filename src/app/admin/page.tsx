@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Header from '@/components/Header';
 import Link from 'next/link';
 import { fetchUsers, fetchProducts, fetchOrders } from '@/lib/api';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 // Define types for our data
 interface User {
@@ -106,8 +107,9 @@ export default function AdminPage() {
       <div className="min-h-screen bg-background">
         <Header />
         <main className="container mx-auto px-4 py-8">
-          <div className="max-w-md mx-auto bg-card-background rounded-lg shadow-md p-8 border border-card-border">
+          <div className="max-w-md mx-auto bg-card-background rounded-lg shadow-md p-8 border border-card-border fade-in">
             <h1 className="text-3xl font-bold mb-6 text-center text-foreground">Checking Access...</h1>
+            <LoadingSpinner size="lg" className="mx-auto mb-4" />
             <p className="text-center text-gray-400">Please wait while we verify your credentials.</p>
           </div>
         </main>
@@ -120,12 +122,12 @@ export default function AdminPage() {
       <div className="min-h-screen bg-background">
         <Header />
         <main className="container mx-auto px-4 py-8">
-          <div className="max-w-md mx-auto bg-card-background rounded-lg shadow-md p-8 border border-card-border">
+          <div className="max-w-md mx-auto bg-card-background rounded-lg shadow-md p-8 border border-card-border fade-in">
             <h1 className="text-3xl font-bold mb-6 text-center text-foreground">Access Denied</h1>
             <p className="text-center text-gray-400 mb-6">You do not have permission to access the admin dashboard.</p>
             <button
               onClick={() => router.push('/account')}
-              className="w-full bg-button-background text-white py-3 rounded hover:bg-button-hover transition-colors duration-200"
+              className="w-full bg-button-background text-white py-3 rounded hover:bg-button-hover transition-all duration-300 transform hover:scale-105 glow-hover"
             >
               Go to Account
             </button>
@@ -139,21 +141,21 @@ export default function AdminPage() {
     <div className="min-h-screen bg-background">
       <Header />
       <main className="container mx-auto px-4 py-8">
-        <div className="flex justify-between items-center mb-8">
+        <div className="flex justify-between items-center mb-8 fade-in">
           <h1 className="text-3xl font-bold text-foreground">Admin Dashboard</h1>
           <button
             onClick={() => {
               localStorage.removeItem('user');
               router.push('/login');
             }}
-            className="bg-red-700 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors duration-200"
+            className="bg-red-700 text-white px-4 py-2 rounded hover:bg-red-600 transition-all duration-300 transform hover:scale-105"
           >
             Logout
           </button>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <Link href="/admin/users" className="bg-card-background rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300 border border-card-border">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 staggered-animation">
+          <Link href="/admin/users" className="bg-card-background rounded-lg shadow-md p-6 hover:shadow-lg transition-all duration-300 border border-card-border float-hover">
             <div className="flex items-center">
               <div className="bg-blue-900 p-3 rounded-full mr-4">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -167,7 +169,7 @@ export default function AdminPage() {
             </div>
           </Link>
           
-          <Link href="/admin/products" className="bg-card-background rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300 border border-card-border">
+          <Link href="/admin/products" className="bg-card-background rounded-lg shadow-md p-6 hover:shadow-lg transition-all duration-300 border border-card-border float-hover">
             <div className="flex items-center">
               <div className="bg-green-900 p-3 rounded-full mr-4">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -181,7 +183,7 @@ export default function AdminPage() {
             </div>
           </Link>
           
-          <Link href="/admin/orders" className="bg-card-background rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300 border border-card-border">
+          <Link href="/admin/orders" className="bg-card-background rounded-lg shadow-md p-6 hover:shadow-lg transition-all duration-300 border border-card-border float-hover">
             <div className="flex items-center">
               <div className="bg-purple-900 p-3 rounded-full mr-4">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -196,42 +198,32 @@ export default function AdminPage() {
           </Link>
         </div>
         
-        <div className="bg-card-background rounded-lg shadow-md p-6 border border-card-border">
+        <div className="bg-card-background rounded-lg shadow-md p-6 border border-card-border slide-up">
           <h2 className="text-2xl font-bold mb-4 text-foreground">Quick Stats</h2>
           {loading ? (
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              <div className="bg-gray-800 p-4 rounded-lg animate-pulse">
-                <p className="text-sm text-gray-400">Total Users</p>
-                <p className="text-2xl font-bold text-foreground">Loading...</p>
-              </div>
-              <div className="bg-gray-800 p-4 rounded-lg animate-pulse">
-                <p className="text-sm text-gray-400">Total Products</p>
-                <p className="text-2xl font-bold text-foreground">Loading...</p>
-              </div>
-              <div className="bg-gray-800 p-4 rounded-lg animate-pulse">
-                <p className="text-sm text-gray-400">Total Orders</p>
-                <p className="text-2xl font-bold text-foreground">Loading...</p>
-              </div>
-              <div className="bg-gray-800 p-4 rounded-lg animate-pulse">
-                <p className="text-sm text-gray-400">Revenue</p>
-                <p className="text-2xl font-bold text-foreground">Loading...</p>
-              </div>
+              {[1, 2, 3, 4].map((index) => (
+                <div key={index} className="bg-gray-800 p-4 rounded-lg animate-pulse">
+                  <p className="text-sm text-gray-400 h-4 bg-gray-700 rounded mb-2 w-3/4"></p>
+                  <p className="text-2xl font-bold text-foreground h-6 bg-gray-700 rounded w-1/2"></p>
+                </div>
+              ))}
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              <div className="bg-gray-800 p-4 rounded-lg">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 staggered-animation">
+              <div className="bg-gray-800 p-4 rounded-lg border-l-4 border-blue-500">
                 <p className="text-sm text-gray-400">Total Users</p>
                 <p className="text-2xl font-bold text-foreground">{stats.totalUsers.toLocaleString()}</p>
               </div>
-              <div className="bg-gray-800 p-4 rounded-lg">
+              <div className="bg-gray-800 p-4 rounded-lg border-l-4 border-green-500">
                 <p className="text-sm text-gray-400">Total Products</p>
                 <p className="text-2xl font-bold text-foreground">{stats.totalProducts.toLocaleString()}</p>
               </div>
-              <div className="bg-gray-800 p-4 rounded-lg">
+              <div className="bg-gray-800 p-4 rounded-lg border-l-4 border-purple-500">
                 <p className="text-sm text-gray-400">Total Orders</p>
                 <p className="text-2xl font-bold text-foreground">{stats.totalOrders.toLocaleString()}</p>
               </div>
-              <div className="bg-gray-800 p-4 rounded-lg">
+              <div className="bg-gray-800 p-4 rounded-lg border-l-4 border-yellow-500">
                 <p className="text-sm text-gray-400">Revenue</p>
                 <p className="text-2xl font-bold text-foreground">${stats.totalRevenue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
               </div>

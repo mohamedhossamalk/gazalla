@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Header from '@/components/Header';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 // Define the user type
 interface User {
@@ -117,12 +118,27 @@ export default function AccountSettingsPage() {
 
   if (!isLoggedIn) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-background">
         <Header />
         <main className="container mx-auto px-4 py-8">
-          <div className="max-w-4xl mx-auto">
-            <h1 className="text-3xl font-bold mb-8">Account Settings</h1>
-            <p className="text-center">Redirecting to login...</p>
+          <div className="max-w-4xl mx-auto fade-in">
+            <h1 className="text-3xl font-bold mb-8 text-foreground">Account Settings</h1>
+            <div className="bg-card-background rounded-lg shadow-md p-8 text-center border border-card-border slide-up">
+              <div className="flex justify-center mb-6">
+                <div className="bg-gray-800 rounded-full p-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+              </div>
+              <p className="text-gray-400 mb-6">Redirecting to login...</p>
+              <Link 
+                href="/login" 
+                className="text-button-background hover:underline transition-colors duration-300"
+              >
+                Click here if you are not redirected
+              </Link>
+            </div>
           </div>
         </main>
       </div>
@@ -130,106 +146,115 @@ export default function AccountSettingsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       <Header />
       <main className="container mx-auto px-4 py-8">
-        <div className="max-w-2xl mx-auto">
+        <div className="max-w-2xl mx-auto fade-in">
           <div className="flex justify-between items-center mb-8">
-            <h1 className="text-3xl font-bold">Account Settings</h1>
-            <Link href="/account" className="text-black hover:underline">
-              &larr; Back to Account
+            <h1 className="text-3xl font-bold text-foreground">Account Settings</h1>
+            <Link href="/account" className="text-button-background hover:underline transition-colors duration-300 flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              </svg>
+              Back to Account
             </Link>
           </div>
           
           {loading ? (
-            <div className="bg-white rounded-lg shadow-md p-6 text-center">
-              <p className="text-gray-600">Loading account settings...</p>
+            <div className="bg-card-background rounded-lg shadow-md p-12 text-center border border-card-border slide-up">
+              <LoadingSpinner size="lg" className="mx-auto mb-4" />
+              <p className="text-gray-400">Loading account settings...</p>
             </div>
           ) : (
-            <div className="bg-white rounded-lg shadow-md p-6">
+            <div className="bg-card-background rounded-xl shadow-md p-6 border border-card-border slide-up">
               {error && (
-                <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                <div className="bg-red-900 border border-red-700 text-red-200 px-4 py-3 rounded mb-6 animate-shake">
                   {error}
                 </div>
               )}
               
               {success && (
-                <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
-                  {success}
+                <div className="bg-green-900 border border-green-700 text-green-200 px-4 py-3 rounded mb-6">
+                  <div className="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    {success}
+                  </div>
                 </div>
               )}
               
               <form onSubmit={handleSubmit}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                   <div>
-                    <label className="block text-gray-700 mb-2">First Name</label>
+                    <label className="block text-foreground mb-2">First Name</label>
                     <input
                       type="text"
                       name="firstName"
                       value={formData.firstName}
                       onChange={handleChange}
-                      className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-black"
+                      className="w-full px-4 py-3 border border-input-border rounded-lg focus:outline-none focus:ring-2 focus:ring-input-focus bg-input-background text-foreground transition-all duration-300 hover:border-accent"
                       required
                     />
                   </div>
                   <div>
-                    <label className="block text-gray-700 mb-2">Last Name</label>
+                    <label className="block text-foreground mb-2">Last Name</label>
                     <input
                       type="text"
                       name="lastName"
                       value={formData.lastName}
                       onChange={handleChange}
-                      className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-black"
+                      className="w-full px-4 py-3 border border-input-border rounded-lg focus:outline-none focus:ring-2 focus:ring-input-focus bg-input-background text-foreground transition-all duration-300 hover:border-accent"
                       required
                     />
                   </div>
                 </div>
                 
                 <div className="mb-6">
-                  <label className="block text-gray-700 mb-2">Email</label>
+                  <label className="block text-foreground mb-2">Email</label>
                   <input
                     type="email"
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-black"
+                    className="w-full px-4 py-3 border border-input-border rounded-lg focus:outline-none focus:ring-2 focus:ring-input-focus bg-input-background text-foreground transition-all duration-300 hover:border-accent"
                     required
                   />
                 </div>
                 
-                <div className="border-t border-gray-200 pt-6 mb-6">
-                  <h2 className="text-xl font-bold mb-4">Change Password</h2>
+                <div className="border-t border-card-border pt-6 mb-6">
+                  <h2 className="text-xl font-bold mb-4 text-foreground">Change Password</h2>
                   
                   <div className="mb-4">
-                    <label className="block text-gray-700 mb-2">Current Password</label>
+                    <label className="block text-foreground mb-2">Current Password</label>
                     <input
                       type="password"
                       name="currentPassword"
                       value={formData.currentPassword}
                       onChange={handleChange}
-                      className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-black"
+                      className="w-full px-4 py-3 border border-input-border rounded-lg focus:outline-none focus:ring-2 focus:ring-input-focus bg-input-background text-foreground transition-all duration-300 hover:border-accent"
                     />
                   </div>
                   
                   <div className="mb-4">
-                    <label className="block text-gray-700 mb-2">New Password</label>
+                    <label className="block text-foreground mb-2">New Password</label>
                     <input
                       type="password"
                       name="newPassword"
                       value={formData.newPassword}
                       onChange={handleChange}
-                      className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-black"
+                      className="w-full px-4 py-3 border border-input-border rounded-lg focus:outline-none focus:ring-2 focus:ring-input-focus bg-input-background text-foreground transition-all duration-300 hover:border-accent"
                     />
                   </div>
                   
                   <div className="mb-6">
-                    <label className="block text-gray-700 mb-2">Confirm New Password</label>
+                    <label className="block text-foreground mb-2">Confirm New Password</label>
                     <input
                       type="password"
                       name="confirmNewPassword"
                       value={formData.confirmNewPassword}
                       onChange={handleChange}
-                      className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-black"
+                      className="w-full px-4 py-3 border border-input-border rounded-lg focus:outline-none focus:ring-2 focus:ring-input-focus bg-input-background text-foreground transition-all duration-300 hover:border-accent"
                     />
                   </div>
                 </div>
@@ -237,7 +262,7 @@ export default function AccountSettingsPage() {
                 <div className="flex justify-end">
                   <button
                     type="submit"
-                    className="bg-black text-white px-6 py-2 rounded hover:bg-gray-800 transition-colors duration-200"
+                    className="bg-button-background text-white px-6 py-3 rounded-lg hover:bg-button-hover transition-all duration-300 transform hover:scale-[1.02] glow-hover font-semibold"
                   >
                     Save Changes
                   </button>
