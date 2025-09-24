@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Header from '@/components/Header';
 import Link from 'next/link';
-import PlatformIllustration from '@/components/PlatformIllustration';
 
 // Define the user type
 interface User {

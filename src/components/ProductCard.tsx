@@ -5,6 +5,7 @@ import { useCart } from '@/context/CartContext';
 import { useWishlist } from '@/context/WishlistContext';
 import Link from 'next/link';
 import { useState } from 'react';
+import Image from 'next/image';
 
 export default function ProductCard({ product }: { product: Product }) {
   const { addItem } = useCart();
@@ -84,10 +85,11 @@ export default function ProductCard({ product }: { product: Product }) {
               </div>
             ) : (
               <>
-                <img 
+                <Image 
                   src={product.imageUrl || '/images/placeholder.jpg'} 
                   alt={product.name} 
-                  className={`w-full h-full object-cover transition-opacity duration-300 ${imageLoading ? 'opacity-0' : 'opacity-100'}`}
+                  fill
+                  className={`object-cover transition-opacity duration-300 ${imageLoading ? 'opacity-0' : 'opacity-100'}`}
                   onLoad={handleImageLoad}
                   onError={handleImageError}
                 />

@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import Header from '@/components/Header';
 import { useCart } from '@/context/CartContext';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function CartPage() {
   const router = useRouter();
@@ -71,10 +72,12 @@ export default function CartPage() {
                   return (
                     <div key={item.id} className="flex items-center p-6 border-b border-card-border last:border-b-0 slide-up">
                       <div className="bg-gray-700 w-24 h-24 flex items-center justify-center mr-6 rounded-lg">
-                        <img 
+                        <Image 
                           src="/image/WhatsApp_Image_2025-09-17_at_02.47.45_de6dbebb-removebg-preview.png" 
                           alt={item.name} 
-                          className="w-full h-full object-contain rounded-lg"
+                          width={96}
+                          height={96}
+                          className="object-contain rounded-lg"
                         />
                       </div>
                       <div className="flex-1">

@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Header from '@/components/Header';
-import PlatformIllustration from '@/components/PlatformIllustration';
+import Image from 'next/image';
 
 export default function AboutPage() {
   const [user, setUser] = useState(null);
@@ -49,10 +49,12 @@ export default function AboutPage() {
           <div className="lg:w-1/2 flex justify-center slide-up animate-delay-300">
             <div className="relative w-80 h-80 flex items-center justify-center">
               <div className="absolute inset-0 bg-gradient-to-br from-accent to-button-background rounded-full opacity-20 blur-xl animate-pulse"></div>
-              <img 
+              <Image 
                 src="/image/WhatsApp_Image_2025-09-17_at_02.47.45_de6dbebb-removebg-preview.png" 
                 alt="GAZALLA Logo" 
-                className="relative w-64 h-64 object-contain"
+                width={256}
+                height={256}
+                className="relative object-contain"
               />
             </div>
           </div>
